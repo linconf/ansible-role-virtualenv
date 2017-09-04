@@ -7,9 +7,13 @@
 
 - name: initialize default variables
   set_fact:
+    virtualenv_ssh_user: '{{ansible_ssh_user|default(lookup("env", "USER"))}}'
+
+- name: initialize default variables
+  set_fact:
     virtualenv_internal_path: '{{virtualenv_path|mandatory}}'
-    virtualenv_internal_user: '{{virtualenv_user|default(ansible_ssh_user,true)}}'
-    virtualenv_becoming: '{{(virtualenv_whoami_result.stdout != ansible_ssh_user or virtualenv_whoami_result.stdout == "root")|bool}}'
+    virtualenv_internal_user: '{{virtualenv_user|default(virtualenv_ssh_user,true)}}'
+    virtualenv_becoming: '{{(virtualenv_whoami_result.stdout != virtualenv_ssh_user or virtualenv_whoami_result.stdout == "root")|bool}}'
     virtualenv_actual_user: '{{virtualenv_whoami_result.stdout}}'
 
 - name: install default os packages to create virtualenv

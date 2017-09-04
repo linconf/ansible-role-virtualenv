@@ -2,8 +2,9 @@
 
 virtualenv_default_os_packages:
   apt:
-    - python-dev
+    - python
+    - virtualenv
     - python-virtualenv
   yum:
-    - python-devel
+    - python
     - python-virtualenv
